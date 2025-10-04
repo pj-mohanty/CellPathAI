@@ -1,0 +1,77 @@
+############################
+# Build and IDE Files
+############################
+target/
+build/
+out/
+*.class
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Eclipse
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache
+
+# NetBeans
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+
+# VS Code
+.vscode/
+
+# macOS system files
+.DS_Store
+
+############################
+# Maven Wrapper
+############################
+!.mvn/wrapper/maven-wrapper.jar
+
+############################
+# Logs and temporary files
+############################
+*.log
+*.tmp
+*.bak
+*.swp
+*.swo
+
+############################
+# Environment & Secrets
+############################
+#  DO NOT COMMIT FIREBASE OR ENV FILES
+src/main/resources/firebase-key.json
+.env
+.env.*
+*.secret
+*.key
+*.pem
+
+############################
+# Node / Frontend (if inside same repo)
+############################
+frontend/node_modules/
+frontend/.next/
+frontend/.vercel/
+frontend/dist/
+frontend/build/
+
+############################
+# OS / Misc
+############################
+Thumbs.db
