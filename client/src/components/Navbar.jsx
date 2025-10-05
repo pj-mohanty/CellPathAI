@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <header className="w-full bg-gradient-to-r from-teal-600 to-gray-900 shadow-lg">
+    <header className="w-full bg-gradient-to-r from-green-600 to-teal-900 shadow-lg">
       <div className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
         {/* Left side: Brand */}
         <h1 className="text-2xl font-bold text-white tracking-wide">CellPathAI</h1>
