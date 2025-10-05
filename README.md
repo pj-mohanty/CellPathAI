@@ -14,6 +14,7 @@ learning more interactive and engaging
 ```bash
 git clone https://github.com/pj-mohanty/CellPathAI.git
 cd CellPathAI
+```
 
 ### 2 Backend Setup (Spring Boot + Firestore)
 1. Open the Backend in IntelliJ (Recommended)
