@@ -20,32 +20,32 @@ cd CellPathAI
 1. Open the Backend in IntelliJ (Recommended)
 
 2. In IntelliJ IDEA, go to
-File → Open → Select
-backend/server folder (the one containing pom.xml).
+- File → Open → Select
+- backend/server folder (the one containing pom.xml).
 
-IntelliJ should automatically detect it as a Maven project and start downloading dependencies from the pom.xml.
+- IntelliJ should automatically detect it as a Maven project and start downloading dependencies from the pom.xml.
 
-Wait until you see “Build completed successfully” in the bottom status bar.
+- Wait until you see “Build completed successfully” in the bottom status bar.
 
-- If IntelliJ doesn’t automatically detect the project as Maven:
+If IntelliJ doesn’t automatically detect the project as Maven:
 
-Right-click the pom.xml file → Add as Maven Project
+- Right-click the pom.xml file → Add as Maven Project
 
-Then go to View → Tool Windows → Maven → Reload All Maven Projects
+- Then go to View → Tool Windows → Maven → Reload All Maven Projects
 
-- Manually Build Maven (if automatic build fails)
+ Manually Build Maven (if automatic build fails)
 
 If IntelliJ does not build the backend automatically, you can manually force Maven to build it inside IntelliJ:
 
 Option 1: Using IntelliJ GUI
 
-Go to the Maven panel (right sidebar or via View → Tool Windows → Maven)
+- Go to the Maven panel (right sidebar or via View → Tool Windows → Maven)
 
-Expand Lifecycle
+- Expand Lifecycle
 
-Double-click clean, then install
+- Double-click clean, then install
 
-This runs the equivalent of:
+- This runs the equivalent of:
 
 mvn clean install
 
@@ -64,23 +64,23 @@ This will compile and package your Spring Boot backend locally.
 
 3.  Configure Firebase (Firestore Connection)
 
-To connect your backend to Firestore:
+- To connect your backend to Firestore:
 
-Go to Firebase Console
+- Go to Firebase Console
  and create a new project.
 
-In the sidebar, navigate to
+- In the sidebar, navigate to
 Build → Firestore Database → Create Database.
 
-Then go to
+- Then go to
 Project Settings → Service Accounts → Generate new private key(select java).
 
-Download the JSON key and rename it to:
+-Download the JSON key and rename it to:
 
 firebase-key.json
 
 
-Save the file at:
+- Save the file at:
 
 backend/server/src/main/resources/firebase-key.json
 
@@ -101,11 +101,12 @@ backend/server/src/main/java/com/cellpathai/utils/FirestoreSeeder.java
 Click the Run ▶️ button at the top of IntelliJ.
 
 You should see logs like:
-
+```bash
 Starting Firestore seeding...
 Added quiz: Genetics - Quiz 1
 Successfully seeded 10 quiz records!
 Seeding process completed!
+```
 
 5. ▶️ Run the Backend Server
 
@@ -162,14 +163,19 @@ Application started successfully
 
 ### 3. Frontend Setup (React + Tailwind)
 Step 1: Open Frontend Folder
+```bash
 cd client
+```
 
 Step 2: Install Dependencies
+```bash
 npm install
+```
 
 Step 3: Start the Frontend App
+```bash
 npm run start
-
+```
 
 The frontend will be available at:
 
