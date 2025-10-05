@@ -1,77 +1,109 @@
 import React, { useState, useEffect } from "react";
 
-// Sample quiz data with the required structure
-const sampleQuizzes = [
-  { id: "quiz-1", topic: "Protein Metabolism", quiz: "Quiz 1", score: 85, attempts: 2, status: "Passed", date: "08/10/2025" },
-  { id: "quiz-2", topic: "Glycolysis", quiz: "Quiz 2", score: 65, attempts: 1, status: "Attempted", date: "08/15/2025" },
-  { id: "quiz-3", topic: "Cell Cycle", quiz: "Quiz 1", score: 45, attempts: 3, status: "Failed", date: "08/20/2025" },
-  { id: "quiz-4", topic: "DNA Replication", quiz: "Quiz 2", score: 92, attempts: 1, status: "Passed", date: "08/25/2025" },
-  { id: "quiz-5", topic: "Photosynthesis", quiz: "Quiz 3", score: 78, attempts: 2, status: "Attempted", date: "09/01/2025" },
-  { id: "quiz-6", topic: "Enzyme Kinetics", quiz: "Quiz 1", score: 88, attempts: 1, status: "Passed", date: "09/05/2025" },
-];
-
 const Dashboard = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
   const [quizzes, setQuizzes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setQuizzes(sampleQuizzes);
+    const fetchQuizzes = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/dashboard/quizzes");
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+
+        const data = await response.json();
+
+        //  Convert Firestore timestamps to readable dates
+        const formatted = data.map(q => ({
+          ...q,
+          createdAt: q.createdAt?.seconds
+            ? new Date(q.createdAt.seconds * 1000).toLocaleDateString()
+            : q.createdAt,
+          updatedAt: q.updatedAt?.seconds
+            ? new Date(q.updatedAt.seconds * 1000).toLocaleDateString()
+            : q.updatedAt,
+        }));
+
+        setQuizzes(formatted);
+      } catch (err) {
+        console.error("Failed to fetch quizzes:", err);
+        setError("Failed to load quizzes. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchQuizzes();
   }, []);
 
-  // Stats calculation
+  //  Stats
   const total = quizzes.length;
-  const attempted = quizzes.filter(quiz => quiz.status === "Attempted").length;
-  const passed = quizzes.filter(quiz => quiz.status === "Passed").length;
-  const failed = quizzes.filter(quiz => quiz.status === "Failed").length;
+  const passed = quizzes.filter(q => Number(q.score) >= 50).length;
+  const failed = quizzes.filter(q => Number(q.score) < 50).length;
 
-  const filteredQuizzes = selectedStatus === "All" 
-    ? quizzes 
-    : quizzes.filter(quiz => quiz.status === selectedStatus);
+  const filteredQuizzes = selectedStatus === "All"
+    ? quizzes
+    : selectedStatus === "Passed"
+    ? quizzes.filter(q => Number(q.score) >= 50)
+    : selectedStatus === "Failed"
+    ? quizzes.filter(q => Number(q.score) < 50)
+    : quizzes;
 
+
+  //  Delete quiz locally (optional: later can call backend delete)
   const handleDelete = async (id) => {
-    try {
-      setQuizzes(quizzes.filter(quiz => quiz.id !== id));
-    } catch (err) {
-      console.error('Failed to delete quiz:', err);
-    }
+    setQuizzes(quizzes.filter(q => q.id !== id));
   };
 
   const handleRetake = (quiz) => {
-    console.log('Retaking quiz:', quiz.id);
-    // TODO: Navigate to quiz retake page
+    console.log("Retaking quiz:", quiz.id);
   };
 
   const handleAnalytics = (quiz) => {
-    console.log('Viewing analytics for quiz:', quiz.id);
-    // TODO: Navigate to analytics page
+    console.log("Viewing analytics for quiz:", quiz.id);
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-[100vh]">
+        <p className="text-gray-600 text-lg">Loading quizzes...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center min-h-[100vh]">
+        <p className="text-red-600 text-lg">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="px-6 py-8 bg-gray-50 min-h-[100vh]">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-800">Quiz Dashboard</h1>
         <button
-          onClick={() => console.log('Add new quiz')}
-          className="bg-blue-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-700"
+          onClick={() => console.log("Take new quiz")}
+          className="bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-700"
         >
-          Take a Quiz
+          Take new Quiz
         </button>
       </div>
 
-      {/* Stat Cards */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+      {/*  Stat Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {[
-          ['Total Quizzes', total, '📘', 'bg-blue-100', 'All'],
-          ['Attempted', attempted, '✏️', 'bg-yellow-100', 'Attempted'],
-          ['Passed', passed, '✅', 'bg-green-100', 'Passed'],
-          ['Failed', failed, '❌', 'bg-red-100', 'Failed']
+          ["Total", total, "📘", "bg-blue-100", "All"],
+          ["Passed (>50%)", passed, "✅", "bg-green-100", "Passed"],
+          ["Failed (<50%)", failed, "❌", "bg-red-100", "Failed"],
         ].map(([label, count, icon, bg, status], idx) => (
           <button
             key={idx}
             type="button"
             onClick={() => setSelectedStatus(status)}
-            className={`bg-white border rounded-lg p-4 flex items-center gap-3 shadow-sm transition-all duration-150 focus:outline-none ${selectedStatus === status ? 'ring-2 ring-blue-400 border-blue-400' : ''}`}
-            style={{ cursor: 'pointer' }}
+            className={`bg-white border rounded-lg p-4 flex items-center gap-3 shadow-sm transition-all duration-150 focus:outline-none ${selectedStatus === status ? "ring-2 ring-blue-400 border-blue-400" : ""}`}
           >
             <div className={`p-2 rounded-full ${bg} text-lg`}>{icon}</div>
             <div>
@@ -82,17 +114,23 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/* Quiz table */}
+      {/*  Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="px-6 py-4 border-b flex justify-between items-center">
-          <h2 className="text-md font-semibold text-gray-800">Quiz Attempts</h2>
+          <h2 className="text-md font-semibold text-gray-800">
+            Quiz Attempts
+            {selectedStatus !== "All" && (
+              <span className="text-sm text-gray-500 ml-2">
+                (Filtered: {selectedStatus} - {filteredQuizzes.length} quizzes)
+              </span>
+            )}
+          </h2>
           <select
             className="text-sm border rounded px-3 py-1 text-gray-700"
             value={selectedStatus}
             onChange={(e) => setSelectedStatus(e.target.value)}
           >
             <option value="All">All</option>
-            <option value="Attempted">Attempted</option>
             <option value="Passed">Passed</option>
             <option value="Failed">Failed</option>
           </select>
@@ -124,11 +162,13 @@ const Dashboard = () => {
                   <td className="px-6 py-4">{quiz.topic}</td>
                   <td className="px-6 py-4">{quiz.quiz}</td>
                   <td className="px-6 py-4">
-                    <span className={`px-3 py-1 text-xs font-medium rounded-full ${
-                      quiz.score >= 80 ? 'bg-green-100 text-green-700' :
-                      quiz.score >= 60 ? 'bg-yellow-100 text-yellow-700' :
-                      'bg-red-100 text-red-700'
-                    }`}>
+                    <span
+                      className={`px-3 py-1 text-xs font-medium rounded-full ${
+                        Number(quiz.score) >= 50
+                          ? "bg-green-500 text-white"
+                          : "bg-red-500 text-white"
+                      }`}
+                    >
                       {quiz.score}%
                     </span>
                   </td>

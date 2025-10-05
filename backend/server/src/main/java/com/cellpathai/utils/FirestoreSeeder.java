@@ -1,9 +1,9 @@
 package com.cellpathai.utils;
 
 import com.cellpathai.FirestoreInitializer;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteBatch;
-import com.google.cloud.firestore.DocumentReference;
 
 import java.util.*;
 
