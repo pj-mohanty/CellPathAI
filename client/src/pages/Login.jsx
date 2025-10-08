@@ -1,4 +1,4 @@
-// src/pages/Login.jsx
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getAuth, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';

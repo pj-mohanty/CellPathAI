@@ -1,18 +1,22 @@
 package com.cellpathai.utils;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
 import com.cellpathai.FirestoreInitializer;
 import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteBatch;
-
-import java.util.*;
 
 public class FirestoreSeeder {
 
     private final Firestore db;
 
     public FirestoreSeeder() {
-        this.db = FirestoreInitializer.getFirestore(); // use your initialized Firestore
+        this.db = FirestoreInitializer.getFirestore(); 
     }
 
     public void seedDashboardQuizzes() {

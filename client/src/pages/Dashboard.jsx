@@ -14,7 +14,6 @@ const Dashboard = () => {
 
         const data = await response.json();
 
-        //  Convert Firestore timestamps to readable dates
         const formatted = data.map(q => ({
           ...q,
           createdAt: q.createdAt?.seconds
@@ -37,7 +36,6 @@ const Dashboard = () => {
     fetchQuizzes();
   }, []);
 
-  //  Stats
   const total = quizzes.length;
   const passed = quizzes.filter(q => Number(q.score) >= 50).length;
   const failed = quizzes.filter(q => Number(q.score) < 50).length;
@@ -51,7 +49,6 @@ const Dashboard = () => {
     : quizzes;
 
 
-  //  Delete quiz locally (optional: later can call backend delete)
   const handleDelete = async (id) => {
     setQuizzes(quizzes.filter(q => q.id !== id));
   };
@@ -92,7 +89,6 @@ const Dashboard = () => {
         </button>
       </div>
 
-      {/*  Stat Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {[
           ["Total", total, "📘", "bg-blue-100", "All"],
@@ -114,7 +110,6 @@ const Dashboard = () => {
         ))}
       </div>
 
-      {/*  Table */}
       <div className="bg-white rounded-lg shadow overflow-hidden">
         <div className="px-6 py-4 border-b flex justify-between items-center">
           <h2 className="text-md font-semibold text-gray-800">
