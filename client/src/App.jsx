@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -32,15 +33,16 @@ function App() {
 
 function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/';
+  const isLoginPage = location.pathname === '/login'; // ✅ check correct login route
 
   return (
     <div className="min-h-screen bg-gray-50">
       {!isLoginPage && <Navbar />}
 
       <Routes>
+        {/* Login Route */}
         <Route
-          path="/"
+          path="/login"
           element={
             loggedUser ? (
               <Navigate to="/dashboard" replace />
@@ -49,16 +51,33 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
+
+        {/* Dashboard Route */}
         <Route
           path="/dashboard"
           element={
             loggedUser ? (
               <Dashboard loggedUser={loggedUser} />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/login" replace />
             )
           }
         />
+
+        {/* Topics Route */}
+        <Route
+          path="/topics"
+          element={
+            loggedUser ? (
+              <Topics loggedUser={loggedUser} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        {/* Catch-all: redirect unknown routes */}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </div>
   );
