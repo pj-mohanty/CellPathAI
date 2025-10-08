@@ -1,18 +1,22 @@
 package com.cellpathai.controllers;
 
-import com.cellpathai.FirestoreInitializer;
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-/**
- * Controller for fetching quiz data for the Dashboard UI.
- * Uses the Firestore collection: "dashboardQuizzes".
- */
-//@CrossOrigin(origins = "http://localhost:3000")
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cellpathai.FirestoreInitializer;
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.Firestore;
+import com.google.cloud.firestore.QueryDocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/api/dashboard")
@@ -20,9 +24,6 @@ public class DashboardQuizController {
 
     private final Firestore db = FirestoreInitializer.getFirestore();
 
-    /**
-     * Returns all dashboard quizzes from Firestore.
-     */
     @GetMapping("/quizzes")
     public List<Map<String, Object>> getDashboardQuizzes() throws ExecutionException, InterruptedException {
         List<Map<String, Object>> quizzes = new ArrayList<>();

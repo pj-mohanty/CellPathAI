@@ -1,14 +1,14 @@
 package com.cellpathai;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 
 public class FirestoreInitializer {
     private static Firestore firestore;
@@ -22,7 +22,6 @@ public class FirestoreInitializer {
 
     private static void initialize() {
         try {
-            // ✅ Path to your Firebase key (relative to project root)
             String keyPath = "server/src/main/resources/firebase-key.json";
 
             File file = new File(System.getProperty("user.dir"), keyPath);
