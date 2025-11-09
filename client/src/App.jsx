@@ -33,14 +33,15 @@ function App() {
 
 function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login'; // ✅ check correct login route
+  const isLoginPage = location.pathname === '/login'; 
 
   return (
     <div className="min-h-screen bg-gray-50">
       {!isLoginPage && <Navbar />}
 
       <Routes>
-        {/* Login Route */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
         <Route
           path="/login"
           element={
@@ -52,7 +53,6 @@ function MainContent({ loggedUser, setLoggedUser }) {
           }
         />
 
-        {/* Dashboard Route */}
         <Route
           path="/dashboard"
           element={
@@ -64,7 +64,6 @@ function MainContent({ loggedUser, setLoggedUser }) {
           }
         />
 
-        {/* Topics Route */}
         <Route
           path="/topics"
           element={
@@ -75,9 +74,6 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
-
-        {/* Catch-all: redirect unknown routes */}
-        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </div>
   );
