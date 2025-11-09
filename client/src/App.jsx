@@ -4,6 +4,7 @@ import Dashboard from './pages/Dashboard';
 import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
+import Analytics from './pages/Analytics'; 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './firebase';
 
@@ -58,6 +59,17 @@ function MainContent({ loggedUser, setLoggedUser }) {
           element={
             loggedUser ? (
               <Dashboard loggedUser={loggedUser} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        {/* ✅ New Analytics route */}
+        <Route
+          path="/quiz-analytics"
+          element={
+            loggedUser ? (
+              <Analytics loggedUser={loggedUser} />
             ) : (
               <Navigate to="/login" replace />
             )
