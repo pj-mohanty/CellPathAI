@@ -197,6 +197,12 @@ When encountering a “Whitelabel Error Page” in Spring Boot, AI assistance ex
 
 Finally, for populating mock Firestore data, ChatGPT helped in understanding how to use a FirestoreSeeder to update database that generated random quiz records. I customized field names (quiz, topic, score, status, etc.) to match the structure expected by the React dashboard.
 
+For making the login page, ChatGPT helped me understand how Firebase is used, especially in the LoginForm.js file. I used Firebase before for another class, but I forgot how the code for LoginForm.js worked, so asked Chat to explain how different functions worked, and I modified the code to work in our webiste.
+
+AI also helped me pinpoint and resolve an issue that I was getting when trying to connect the Login.jsx file to App.jsx. By putting my error message into ChatGPT, I was able to figure out that my firebaseAuth was not getting imported properly, and I was able to resolve the issue.
+
+AI also helped me to format the login page in Login.jsx so that it looks nicer and more polished. It gave me some Tailwind CSS formatting to use in my divs in order to make the login page look nicer.
+
 ### Citations & References
 
 This project was built with help from:
