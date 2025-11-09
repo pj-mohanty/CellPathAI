@@ -35,7 +35,7 @@ const Navbar = () => {
             Topics
           </Link>
           <Link
-            to="/analytics"
+            to="/quiz-analytics"
             className="text-white font-medium hover:text-gray-200 transition-colors"
           >
             Analytics

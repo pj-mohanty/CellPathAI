@@ -93,7 +93,7 @@ const Topics = () => {
                 <td className="px-6 py-4">{index + 1}</td>
                 <td className="px-6 py-4 font-medium text-gray-800">{topic}</td>
 
-                {/* Summary Column */}
+            
                 <td className="px-6 py-4 text-gray-700 max-w-md">
                   {loadingTopic === topic ? (
                     <span className="text-gray-500 italic">Generating summary...</span>
@@ -106,7 +106,6 @@ const Topics = () => {
                   )}
                 </td>
 
-                {/* 🧪 Quiz Column */}
                 <td className="px-6 py-4 text-gray-700">
                   <p className="text-gray-400 italic mb-2">
                     Coming soon
@@ -119,7 +118,6 @@ const Topics = () => {
                   </button>
                 </td>
 
-                {/* Actions Column */}
                 <td className="px-6 py-4">
                   <button
                     onClick={() => generateSummary(topic)}

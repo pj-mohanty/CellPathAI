@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'r
 import Dashboard from './pages/Dashboard';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
+import Analytics from './pages/Analytics'; 
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './firebase';
 
@@ -32,13 +33,16 @@ function App() {
 
 function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/';
+  const isLoginPage = location.pathname === '/login'; 
+
 
   return (
     <div className="min-h-screen bg-gray-50">
       {!isLoginPage && <Navbar />}
 
       <Routes>
+        <Route path="/" element={<Navigate to="/login" replace />} />
+
         <Route
           path="/"
           element={
@@ -49,13 +53,36 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
+
         <Route
           path="/dashboard"
           element={
             loggedUser ? (
               <Dashboard loggedUser={loggedUser} />
             ) : (
-              <Navigate to="/" replace />
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+        {/*New Analytics route */}
+        <Route
+          path="/quiz-analytics"
+          element={
+            loggedUser ? (
+              <Analytics loggedUser={loggedUser} />
+            ) : (
+              <Navigate to="/login" replace />
+            )
+          }
+        />
+
+        <Route
+          path="/topics"
+          element={
+            loggedUser ? (
+              <Topics loggedUser={loggedUser} />
+            ) : (
+              <Navigate to="/login" replace />
             )
           }
         />
