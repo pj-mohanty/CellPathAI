@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
+import React, {useEffect, useState} from 'react';
+import {BrowserRouter as Router, Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
-import Analytics from './pages/Analytics'; 
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import SignUp from './pages/SignUp';
+import Analytics from './pages/Analytics';
+import {getAuth, onAuthStateChanged} from 'firebase/auth';
 import './firebase';
 
 function App() {
@@ -14,11 +15,10 @@ function App() {
 
   useEffect(() => {
     const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setLoggedUser(user);
-      setLoading(false);
+      return onAuthStateChanged(auth, (user) => {
+        setLoggedUser(user);
+        setLoading(false);
     });
-    return unsubscribe;
   }, []);
 
   if (loading) {
@@ -34,11 +34,12 @@ function App() {
 
 function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login'; 
+  const isLoginPage = location.pathname === '/login';
+  const isSignUp = location.pathname === '/signup';
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {!isLoginPage && <Navbar />}
+      {!isLoginPage && !isSignUp && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
@@ -53,6 +54,15 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
+
+
+        <Route
+            path="/signup"
+            element={
+                <SignUp />
+            }
+        />
+
 
         <Route
           path="/dashboard"
