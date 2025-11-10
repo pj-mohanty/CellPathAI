@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
+import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Analytics from './pages/Analytics'; 
@@ -35,7 +36,6 @@ function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login'; 
 
-
   return (
     <div className="min-h-screen bg-gray-50">
       {!isLoginPage && <Navbar />}
@@ -44,7 +44,7 @@ function MainContent({ loggedUser, setLoggedUser }) {
         <Route path="/" element={<Navigate to="/login" replace />} />
 
         <Route
-          path="/"
+          path="/login"
           element={
             loggedUser ? (
               <Navigate to="/dashboard" replace />
@@ -64,7 +64,7 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
-        {/*New Analytics route */}
+        {/* ✅ New Analytics route */}
         <Route
           path="/quiz-analytics"
           element={
