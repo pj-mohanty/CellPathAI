@@ -37,6 +37,11 @@ export const Card = ({ title, children }) => (
 );
 
 export const CustomPieChart = ({ data }) => {
+  const size = 300;        
+  const radius = 120;      
+  const innerRadius = 60;  
+  const center = size / 2;
+
   const total = data.reduce((sum, d) => sum + d.value, 0);
   let cumulative = 0;
 
@@ -46,23 +51,30 @@ export const CustomPieChart = ({ data }) => {
     const endAngle = (cumulative / total) * 2 * Math.PI;
     const largeArc = d.value / total > 0.5 ? 1 : 0;
 
-    const x1 = 100 + 80 * Math.cos(startAngle);
-    const y1 = 100 + 80 * Math.sin(startAngle);
-    const x2 = 100 + 80 * Math.cos(endAngle);
-    const y2 = 100 + 80 * Math.sin(endAngle);
+    const x1 = center + radius * Math.cos(startAngle);
+    const y1 = center + radius * Math.sin(startAngle);
+    const x2 = center + radius * Math.cos(endAngle);
+    const y2 = center + radius * Math.sin(endAngle);
 
-    const pathData = `M100,100 L${x1},${y1} A80,80 0 ${largeArc} 1 ${x2},${y2} Z`;
+    const pathData = `
+      M ${center},${center}
+      L ${x1},${y1}
+      A ${radius},${radius} 0 ${largeArc} 1 ${x2},${y2}
+      Z
+    `;
 
     return <path key={i} d={pathData} fill={d.color} stroke="white" strokeWidth="2" />;
   });
 
   return (
-    <svg width="200" height="200" viewBox="0 0 200 200" className="mx-auto">
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} className="mx-auto">
       {slices}
-      <circle cx="100" cy="100" r="40" fill="white" />
+      {/* Inner donut hole */}
+      <circle cx={center} cy={center} r={innerRadius} fill="white" />
     </svg>
   );
 };
+
 
 export const CustomBarChart = ({ data }) => {
   const max = Math.max(...data.map((d) => d.value));

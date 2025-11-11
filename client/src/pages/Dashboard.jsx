@@ -136,7 +136,7 @@ const Dashboard = () => {
             <tr>
               <th className="px-6 py-3 text-left">Sl. no</th>
               <th className="px-6 py-3 text-left">Topic</th>
-              <th className="px-6 py-3 text-left">Quiz no.</th>
+              <th className="px-6 py-3 text-left">Category</th>
               <th className="px-6 py-3 text-left">Score</th>
               <th className="px-6 py-3 text-left">Attempts</th>
               <th className="px-6 py-3 text-left">Date</th>
@@ -155,7 +155,7 @@ const Dashboard = () => {
                 <tr key={quiz.id} className="border-t hover:bg-gray-50">
                   <td className="px-6 py-4 text-gray-800">{index + 1}</td>
                   <td className="px-6 py-4">{quiz.topic}</td>
-                  <td className="px-6 py-4">{quiz.quiz}</td>
+                  <td className="px-6 py-4">{quiz.category}</td>
                   <td className="px-6 py-4">
                     <span
                       className={`px-3 py-1 text-xs font-medium rounded-full ${

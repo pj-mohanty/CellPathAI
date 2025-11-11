@@ -64,7 +64,7 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
-        {/* ✅ New Analytics route */}
+        
         <Route
           path="/quiz-analytics"
           element={
@@ -86,6 +86,7 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
+
       </Routes>
     </div>
   );

@@ -77,13 +77,13 @@ const [selectedQuizCategory, setSelectedQuizCategory] = useState({});
 
 
 
-  const quizCategories = [
-    "Function",
-    "Pathway",
-    "Mechanism",
-    "Regulation",
-    "Application",
-  ];
+    const quizCategories = [
+      "Function",
+      "Pathway",
+      "Mechanism",
+      "Regulation",
+      "Application",
+    ];
 
   return (
     <div className="px-6 py-8 bg-gray-50 min-h-[100vh]">
