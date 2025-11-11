@@ -203,6 +203,8 @@ AI also helped me pinpoint and resolve an issue that I was getting when trying t
 
 AI also helped me to format the login page in Login.jsx so that it looks nicer and more polished. It gave me some Tailwind CSS formatting to use in my divs in order to make the login page look nicer.
 
+AI helped in developing the Quiz Analytics Dashboard, especially in implementing visual components like pie charts and bar graphs to display quiz performance insights. It provided examples for structuring React state management and integrating dynamic data with chart components.
+
 ### Citations & References
 
 This project was built with help from:
