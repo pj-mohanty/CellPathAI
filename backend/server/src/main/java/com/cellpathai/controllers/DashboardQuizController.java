@@ -5,10 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.cellpathai.FirestoreInitializer;
 import com.google.api.core.ApiFuture;
@@ -39,4 +36,14 @@ public class DashboardQuizController {
 
         return quizzes;
     }
+
+    @PostMapping("/save")
+    public String saveQuiz(@RequestBody Map<String, Object> quizData) throws Exception {
+        Firestore db = FirestoreInitializer.getFirestore();
+        quizData.put("createdAt", com.google.cloud.Timestamp.now());
+        quizData.put("updatedAt", com.google.cloud.Timestamp.now());
+        db.collection("dashboardQuizzes").add(quizData);
+        return "Saved";
+    }
+
 }
