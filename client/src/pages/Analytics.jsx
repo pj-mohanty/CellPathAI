@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-// import axios from "axios";
 import {
   MetricCard,
   ChartCard,
@@ -9,7 +8,6 @@ import {
   Legend,
 } from "../components/AnalyticsComponents";
 
-
 /** QUIZ ANALYTICS DASHBOARD **/
 const QuizAnalyticsDashboard = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -17,23 +15,22 @@ const QuizAnalyticsDashboard = () => {
   const [error, setError] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState("All");
 
-useEffect(() => {
-  const fetchQuizzes = async () => {
-    try {
-      const res = await fetch("http://localhost:8080/api/dashboard/quizzes");
-      if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
-      const data = await res.json();
-      setQuizzes(data);
-    } catch (err) {
-      console.error("Error fetching quizzes:", err);
-      setError("Failed to load quizzes.");
-    } finally {
-      setLoading(false);
-    }
-  };
-  fetchQuizzes();
-}, []);
-
+  useEffect(() => {
+    const fetchQuizzes = async () => {
+      try {
+        const res = await fetch("http://localhost:8080/api/dashboard/quizzes");
+        if (!res.ok) throw new Error(`HTTP error: ${res.status}`);
+        const data = await res.json();
+        setQuizzes(data);
+      } catch (err) {
+        console.error("Error fetching quizzes:", err);
+        setError("Failed to load quizzes.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchQuizzes();
+  }, []);
 
   if (loading) return <p className="p-10 text-gray-600 text-center">Loading analytics...</p>;
   if (error) return <p className="p-10 text-red-600 text-center">{error}</p>;
@@ -49,9 +46,8 @@ useEffect(() => {
   const recentActivity = quizzes.slice(-5).reverse();
   const bestTopic = quizzes.reduce((a, b) => (a.score > b.score ? a : b), quizzes[0]);
 
-  // For bar chart
   const scoreDistribution = quizzes.map((q) => ({
-    name: q.topic || `Quiz ${q.quiz}`,
+    name: q.topic,
     value: q.score,
   }));
 
@@ -88,7 +84,7 @@ useEffect(() => {
           <MetricCard title="Average Score" value={`${avgScore}%`} icon="📈" bg="purple" />
         </div>
 
-        {/* Charts Section */}
+        {/* Charts */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <ChartCard title="Performance Overview">
             <CustomPieChart data={pieData} />
@@ -122,7 +118,7 @@ useEffect(() => {
           </Card>
         </div>
 
-        {/* Table Section */}
+        {/* Table */}
         <Card title="Quiz Attempts">
           <div className="flex justify-between mb-3">
             <select
@@ -141,7 +137,7 @@ useEffect(() => {
               <tr>
                 <th className="px-4 py-2 text-left">#</th>
                 <th className="px-4 py-2 text-left">Topic</th>
-                <th className="px-4 py-2 text-left">Quiz No</th>
+                <th className="px-4 py-2 text-left">Category</th>
                 <th className="px-4 py-2 text-left">Score</th>
                 <th className="px-4 py-2 text-left">Attempts</th>
                 <th className="px-4 py-2 text-left">Date</th>
@@ -152,7 +148,7 @@ useEffect(() => {
                 <tr key={q.id} className="border-t hover:bg-gray-50">
                   <td className="px-4 py-2">{i + 1}</td>
                   <td className="px-4 py-2">{q.topic}</td>
-                  <td className="px-4 py-2">{q.quiz}</td>
+                  <td className="px-4 py-2">{q.category}</td>
                   <td className="px-4 py-2 font-semibold">{q.score}%</td>
                   <td className="px-4 py-2">{q.attempts}</td>
                   <td className="px-4 py-2">{q.date}</td>
@@ -161,6 +157,7 @@ useEffect(() => {
             </tbody>
           </table>
         </Card>
+
       </div>
     </div>
   );
