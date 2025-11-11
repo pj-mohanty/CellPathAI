@@ -12,7 +12,7 @@ public class TopicSummary {
      */
     public String runSummaryAgent(String topic) {
         OpenAiChatModel model = OpenAiChatModel.builder()
-                .apiKey("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")
+                .apiKey("")
                 .modelName("gpt-4o-mini")
                 .temperature(0.2)
                 .build();
