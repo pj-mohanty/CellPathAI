@@ -1,23 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {useNavigate} from 'react-router-dom';
+import {getAuth} from "firebase/auth";
 
 function Dashboard() {
+    // use after personal information on database is made
+    const auth = getAuth();
     const navigate = useNavigate();
 
     const topics = [
-        { slug: "glycolysis", title: "Glycolysis" },
-        { slug: "photosynthesis", title: "Photosynthesis" },
-        { slug: "mitosis", title: "Mitosis" },
-        { slug: "dna-replication", title: "DNA Replication" },
-        { slug: "protein-metabolism", title: "Protein Metabolism" },
-        { slug: "cell-membrane", title: "Cell Membrane" },
-        { slug: "genetics", title: "Genetics"},
+        { slug: "cell-biology-basics", title: "Cell Biology Basics", blurb: "Organelles, membranes, transport" },
+        { slug: "mitosis-meiosis", title: "Mitosis & Meiosis", blurb: "Cell division, checkpoints" },
+        { slug: "dna-replication", title: "DNA Replication", blurb: "Enzymes, fidelity, repair" },
     ];
 
     // Optional: search filter
-    const [query, setQuery] = useState("");
+    const [q, setQ] = useState("");
     const filtered = topics.filter(t =>
-        t.title.toLowerCase().includes(query.toLowerCase())
+        (t.title + " " + t.blurb).toLowerCase().includes(q.toLowerCase())
     );
 
     function TopicList({ items }) {
@@ -28,6 +27,7 @@ function Dashboard() {
                         <div className="flex items-start justify-between gap-3">
                             <div>
                                 <h3 className="text-sm font-medium text-gray-900">{t.title}</h3>
+                                <p className="mt-0.5 text-xs text-gray-500">{t.blurb}</p>
                             </div>
                         </div>
                         <div className="mt-3 flex items-center gap-2">
@@ -63,8 +63,8 @@ function Dashboard() {
                             <input
                                 type="search"
                                 placeholder="Search topics…"
-                                value={query}
-                                onChange={(e) => setQuery(e.target.value)}
+                                value={q}
+                                onChange={(e) => setQ(e.target.value)}
                                 className="w-64 rounded-md border border-gray-200 bg-white px-3 py-2 text-sm outline-none focus:border-gray-400"
                             />
                         </div>
