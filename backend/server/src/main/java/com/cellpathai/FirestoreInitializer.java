@@ -1,16 +1,15 @@
 package com.cellpathai;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
 import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.firestore.Firestore;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.cloud.firestore.Firestore;
 import com.google.firebase.cloud.FirestoreClient;
 
+import java.io.InputStream;
+
 public class FirestoreInitializer {
+
     private static Firestore firestore;
 
     public static Firestore getFirestore() {
@@ -22,15 +21,14 @@ public class FirestoreInitializer {
 
     private static void initialize() {
         try {
-            String keyPath = "server/src/main/resources/firebase-key.json";
+            // ✅ Load firebase-key.json from src/main/resources
+            InputStream serviceAccount = FirestoreInitializer.class
+                    .getClassLoader()
+                    .getResourceAsStream("firebase-key.json");
 
-            File file = new File(System.getProperty("user.dir"), keyPath);
-
-            if (!file.exists()) {
-                throw new RuntimeException("❌ Firebase key file not found at: " + file.getAbsolutePath());
+            if (serviceAccount == null) {
+                throw new RuntimeException("❌ firebase-key.json not found in resources");
             }
-
-            FileInputStream serviceAccount = new FileInputStream(file);
 
             FirebaseOptions options = FirebaseOptions.builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -38,12 +36,11 @@ public class FirestoreInitializer {
 
             if (FirebaseApp.getApps().isEmpty()) {
                 FirebaseApp.initializeApp(options);
-                System.out.println("✅ Firebase initialized successfully!");
             }
 
             firestore = FirestoreClient.getFirestore();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             throw new RuntimeException("❌ Error initializing Firestore: " + e.getMessage(), e);
         }
     }
