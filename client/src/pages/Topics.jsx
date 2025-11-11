@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Topics = () => {
   const [topics] = useState([
@@ -17,10 +19,13 @@ const Topics = () => {
 const [selectedQuizCategory, setSelectedQuizCategory] = useState({});
 
   const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+  const navigate = useNavigate();
+
 
   const generateSummary = async (topic) => {
     setError(null);
     setLoadingTopic(topic);
+    
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -66,9 +71,10 @@ const [selectedQuizCategory, setSelectedQuizCategory] = useState({});
     alert("Please select a quiz category first!");
     return;
   }
-  alert(`Starting ${quizCategory} Quiz for ${topic}`);
-  console.log(`Starting ${quizCategory} Quiz for ${topic}`);
+  // Navigate to quiz page with topic and category as URL params
+  navigate(`/quiz/${encodeURIComponent(topic)}/${encodeURIComponent(quizCategory)}`);
 };
+
 
 
   const quizCategories = [
