@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/CellPathAI.iml" filepath="$PROJECT_DIR$/.idea/CellPathAI.iml" />
       <module fileurl="file://$PROJECT_DIR$/client/client.iml" filepath="$PROJECT_DIR$/client/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/server/server.iml" filepath="$PROJECT_DIR$/backend/server/server.iml" />
     </modules>
   </component>
 </project>

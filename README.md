@@ -20,8 +20,8 @@ cd CellPathAI
 1. Open the Backend in IntelliJ (Recommended)
 
 2. In IntelliJ IDEA, go to
-- File → Open → Select
-- backend/server folder (the one containing pom.xml).
+- File → Open → Select  
+- backend folder (the one containing pom.xml).
 
 - IntelliJ should automatically detect it as a Maven project and start downloading dependencies from the pom.xml.
 

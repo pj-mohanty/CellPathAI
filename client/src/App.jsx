@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
+import SignUp from './pages/Signup';
+import ForgotPW from "./pages/Forgotpw";
 import Analytics from './pages/Analytics'; 
 import QuizPage from "./pages/QuizPage";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -35,26 +37,41 @@ function App() {
 
 function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login'; 
+    const isLoginPage = location.pathname === '/login';
+    const isSignUp = location.pathname === '/signup';
+    const isforgot = location.pathname === '/forgotpw';
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {!isLoginPage && <Navbar />}
+        {!isLoginPage && !isSignUp && !isforgot && <Navbar />}
 
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Routes>
+            <Route path="/" element={<Navigate to="/login" replace />} />
 
-        <Route
-          path="/login"
-          element={
-            loggedUser ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Login loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
-            )
-          }
-        />
+            <Route
+                path="/login"
+                element={
+                    loggedUser ? (
+                        <Navigate to="/dashboard" replace />
+                    ) : (
+                        <Login loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
+                    )
+                }
+            />
 
+            <Route
+                path="/signup"
+                element={
+                    <SignUp />
+                }
+            />
+
+            <Route
+                path="/forgotpw"
+                element={
+                    <ForgotPW />
+                }
+            />
         <Route
           path="/dashboard"
           element={
