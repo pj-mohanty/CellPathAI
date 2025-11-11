@@ -77,158 +77,110 @@ function SignUp() {
     };
 
     return (
-        <div class="min-h-screen bg-gradient-to-b from-sky-100 to-white flex items-center justify-center p-4">
-            <div class="w-full max-w-md">
-                <div class="rounded-2xl shadow-xl ring-1 ring-black/5 bg-white/80 backdrop-blur p-6 sm:p-8">
-                    <div class="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-900 text-white">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-                            <path d="M12 12v8M8 16h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                            <path d="M12 12a4 4 0 10-4-4 4 4 0 004 4z" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
+               <div className="min-h-screen bg-gradient-to-b from-emerald-700 to-emerald-600 flex flex-col">
+                 {/* Header */}
+                 <header className="bg-gradient-to-r from-emerald-700 to-emerald-600 text-white py-4 shadow">
+                   <h1 className="text-center text-2xl font-semibold tracking-tight">CellPathAI</h1>
+                 </header>
 
-                    <h1 class="text-center text-xl font-semibold text-gray-900">Create your account</h1>
-                    <p class="mt-1 text-center text-sm text-gray-500">Start using CellpathAI</p>
+                 {/* Main form container */}
+                 <main className="flex flex-1 items-center justify-center px-4 py-10 bg-gray-50">
+                   <div className="w-full max-w-md bg-white rounded-2xl shadow-lg border border-gray-100 p-8">
+                     <h2 className="text-2xl font-semibold text-gray-800 text-center mb-2">
+                       Create Your Account
+                     </h2>
+                     <p className="text-gray-500 text-sm text-center mb-6">
+                       Start using CellPathAI
+                     </p>
 
-                    {/* INFO MESSAGE */}
-                    {InfoMsg && (
-                        <div
-                            role="status"
-                            className="mt-4 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-800"
-                        >
-                            {InfoMsg}
-                        </div>
-                    )}
+                     {InfoMsg && (
+                       <div className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 px-3 py-2 text-sm text-emerald-800">
+                         {InfoMsg}
+                       </div>
+                     )}
 
-                    {/* ERROR MESSAGE (global) */}
-                    {ErrorMsg && (
-                        <div
-                            role="alert"
-                            className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
-                            id="form-error"
-                        >
-                            {ErrorMsg}
-                        </div>
-                    )}
+                     {ErrorMsg && (
+                       <div className="mb-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+                         {ErrorMsg}
+                       </div>
+                     )}
 
-                    <form onsubmit={createUser} class="mt-6 space-y-4" action="#" method="post" novalidate>
-                        <div>
-                            <label class="block text-sm mb-1 text-gray-700" for="email">Email</label>
-                            <div class="relative">
-            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="2"/>
-                <path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-                                <input
-                                    value={email}
-                                    type="email"
-                                    required
-                                    autocomplete="email"
-                                    onchange={(e) => setEmail(e.target.value)}
-                                    placeholder="you@example.com"
-                                    class="w-full rounded-md border border-gray-200 bg-white px-10 py-2.5 text-sm outline-none focus:border-gray-400"
-                                />
-                            </div>
-                        </div>
-                        <div>
-                            <label class="block text-sm mb-1 text-gray-700" for="password">Password</label>
-                            <div class="relative">
-            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
-                <path d="M8 10V7a4 4 0 118 0v3" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-                                <input
-                                    value={pw}
-                                    type={showPw ? 'text' : 'password'}
-                                    onChange={(e) => setPw(e.target.value)}
-                                    required
-                                    minlength="6"
-                                    autocomplete="new-password"
-                                    placeholder="••••••••"
-                                    class="w-full rounded-md border border-gray-200 bg-white px-10 py-2.5 text-sm outline-none focus:border-gray-400"
-                                />
-                                <button
-                                    type="button"
-                                    onclick={() => setShowPw((s) => !s )}
-                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
-                                    aria-label={showPw ? 'Hide password' : 'Show password'}
-                                >
-                                    {showPw ? (
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                            <path d="M3 3l18 18" stroke="currentColor" strokeWidth="2"/>
-                                            <path d="M10.6 10.6A3 3 0 0012 15a3 3 0 001.4-.4M5.1 7.5C3.8 8.7 2.9 10 2.5 10.6a1.2 1.2 0 000 1C4.6 15.7 8 18 12 18c1.4 0 2.7-.3 3.9-.9M18.9 16.5C20.2 15.3 21.1 14 21.5 13.4a1.2 1.2 0 000-1C19.4 8.3 16 6 12 6c-1.1 0-2.1.2-3.1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                                        </svg>
-                                    ) : (
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                            <path d="M2.5 11.6C4.6 8.3 8 6 12 6s7.4 2.3 9.5 5.6a1.2 1.2 0 010 1C19.4 15.7 16 18 12 18S4.6 15.7 2.5 12.6a1.2 1.2 0 010-1z" stroke="currentColor" strokeWidth="2"/>
-                                            <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-                                        </svg>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
+                     <form onSubmit={createUser} className="space-y-5">
+                       <div>
+                         <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                         <input
+                           value={email}
+                           type="email"
+                           required
+                           onChange={(e) => setEmail(e.target.value)}
+                           placeholder="you@example.com"
+                           className="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                         />
+                       </div>
 
-                        <div>
-                            <label class="block text-sm mb-1 text-gray-700" for="confirm_password">Confirm password</label>
-                            <div class="relative">
-            <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                <rect x="4" y="10" width="16" height="10" rx="2" stroke="currentColor" stroke-width="2"/>
-                <path d="M8 10V7a4 4 0 118 0v3" stroke="currentColor" stroke-width="2"/>
-              </svg>
-            </span>
-                                <input
-                                    value={pw2}
-                                    type={showPw2 ? 'text' : 'password'}
-                                    onChange={(e) => setPw2(e.target.value)}
-                                    required
-                                    minlength="6"
-                                    autocomplete="new-password"
-                                    placeholder="••••••••"
-                                    class="w-full rounded-md border border-gray-200 bg-white px-10 py-2.5 text-sm outline-none focus:border-gray-400"
-                                />
-                                <button
-                                    type="button"
-                                    onclick={() => setShowPw2((s) => !s )}
-                                    className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-gray-600"
-                                    aria-label={showPw2 ? 'Hide password' : 'Show password'}
-                                >
-                                    {showPw ? (
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                            <path d="M3 3l18 18" stroke="currentColor" strokeWidth="2"/>
-                                            <path d="M10.6 10.6A3 3 0 0012 15a3 3 0 001.4-.4M5.1 7.5C3.8 8.7 2.9 10 2.5 10.6a1.2 1.2 0 000 1C4.6 15.7 8 18 12 18c1.4 0 2.7-.3 3.9-.9M18.9 16.5C20.2 15.3 21.1 14 21.5 13.4a1.2 1.2 0 000-1C19.4 8.3 16 6 12 6c-1.1 0-2.1.2-3.1.5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                                        </svg>
-                                    ) : (
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-                                            <path d="M2.5 11.6C4.6 8.3 8 6 12 6s7.4 2.3 9.5 5.6a1.2 1.2 0 010 1C19.4 15.7 16 18 12 18S4.6 15.7 2.5 12.6a1.2 1.2 0 010-1z" stroke="currentColor" strokeWidth="2"/>
-                                            <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
-                                        </svg>
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                        <p class="hidden text-red-600 text-sm" id="form-error">Passwords don’t match.</p>
+                       <div>
+                         <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+                         <div className="relative">
+                           <input
+                             value={pw}
+                             type={showPw ? 'text' : 'password'}
+                             onChange={(e) => setPw(e.target.value)}
+                             required
+                             minLength="6"
+                             placeholder="••••••••"
+                             className="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                           />
+                           <button
+                             type="button"
+                             onClick={() => setShowPw(!showPw)}
+                             className="absolute inset-y-0 right-3 text-gray-400 hover:text-gray-600"
+                           >
+                             {showPw ? '🙈' : '👁️'}
+                           </button>
+                         </div>
+                       </div>
 
-                        <button
-                            type="submit"
-                            disabled={Submitting}
-                            class="w-full rounded-md bg-gray-900 px-4 py-2.5 text-white transition hover:bg-black"
-                        >
-                            Get Started
-                        </button>
-                    </form>
-                    <p class="mt-6 text-center text-sm text-gray-500">
-                        Already have an account?
-                        <a href="/login" class="font-medium text-gray-700 hover:text-gray-900"> Log in</a>
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
+                       <div>
+                         <label className="block text-sm font-medium text-gray-700 mb-1">Confirm Password</label>
+                         <div className="relative">
+                           <input
+                             value={pw2}
+                             type={showPw2 ? 'text' : 'password'}
+                             onChange={(e) => setPw2(e.target.value)}
+                             required
+                             minLength="6"
+                             placeholder="••••••••"
+                             className="w-full rounded-md border border-gray-200 bg-white px-4 py-2.5 text-sm outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent"
+                           />
+                           <button
+                             type="button"
+                             onClick={() => setShowPw2(!showPw2)}
+                             className="absolute inset-y-0 right-3 text-gray-400 hover:text-gray-600"
+                           >
+                             {showPw2 ? '🙈' : '👁️'}
+                           </button>
+                         </div>
+                       </div>
+
+                       <button
+                         type="submit"
+                         disabled={Submitting}
+                         className="w-full rounded-md bg-emerald-600 hover:bg-emerald-700 text-white py-2.5 text-sm font-medium transition"
+                       >
+                         {Submitting ? 'Creating account...' : 'Sign Up'}
+                       </button>
+                     </form>
+
+                     <p className="mt-6 text-center text-sm text-gray-500">
+                       Already have an account?{' '}
+                       <a href="/login" className="font-medium text-emerald-600 hover:text-emerald-700">
+                         Log in
+                       </a>
+                     </p>
+                   </div>
+                 </main>
+               </div>
+             );
 }
 
 export default SignUp;
