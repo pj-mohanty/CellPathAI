@@ -7,6 +7,7 @@ import Login from './pages/Login';
 import SignUp from './pages/Signup';
 import ForgotPW from "./pages/Forgotpw";
 import Analytics from './pages/Analytics'; 
+import QuizPage from "./pages/QuizPage";
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import './firebase';
 
@@ -81,6 +82,9 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
+       
+        <Route path="/quiz/:topic/:category" element={<QuizPage />} />
+       
         
         <Route
           path="/quiz-analytics"

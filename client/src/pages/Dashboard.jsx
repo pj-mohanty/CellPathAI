@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Dashboard = () => {
   const [selectedStatus, setSelectedStatus] = useState("All");
@@ -48,18 +50,27 @@ const Dashboard = () => {
     ? quizzes.filter(q => Number(q.score) < 50)
     : quizzes;
 
+    const navigate = useNavigate();
+
 
   const handleDelete = async (id) => {
     setQuizzes(quizzes.filter(q => q.id !== id));
   };
 
-  const handleRetake = (quiz) => {
-    console.log("Retaking quiz:", quiz.id);
-  };
+ const handleTakeNewQuiz = () => {
+  navigate("/topics");
+};
 
-  const handleAnalytics = (quiz) => {
-    console.log("Viewing analytics for quiz:", quiz.id);
-  };
+const handleRetake = (quiz) => {
+  const topic = encodeURIComponent(quiz.topic);
+  const category = encodeURIComponent(quiz.category);
+  navigate(`/quiz/${topic}/${category}`);
+};
+
+const handleAnalytics = () => {
+  navigate("/quiz-analytics");
+};
+
 
   if (loading) {
     return (
@@ -81,12 +92,7 @@ const Dashboard = () => {
     <div className="px-6 py-8 bg-gray-50 min-h-[100vh]">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-800">Quiz Dashboard</h1>
-        <button
-          onClick={() => console.log("Take new quiz")}
-          className="bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Take new Quiz
-        </button>
+
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
@@ -170,28 +176,33 @@ const Dashboard = () => {
                   <td className="px-6 py-4 text-gray-700">{quiz.attempts}</td>
                   <td className="px-6 py-4 text-gray-700">{quiz.date}</td>
                   <td className="px-6 py-4 flex items-center gap-3">
-                    <button
-                      onClick={() => handleRetake(quiz)}
-                      className="text-blue-600 hover:text-blue-800 text-lg"
-                      title="Retake Quiz"
-                    >
-                      🔄
-                    </button>
-                    <button
-                      onClick={() => handleDelete(quiz.id)}
-                      className="text-red-600 hover:text-red-800 text-lg"
-                      title="Delete Quiz"
-                    >
-                      🗑️
-                    </button>
-                    <button
-                      onClick={() => handleAnalytics(quiz)}
-                      className="text-green-600 hover:text-green-800 text-lg"
-                      title="View Analytics"
-                    >
-                      📊
-                    </button>
-                  </td>
+
+                      <button
+                        onClick={() => handleRetake(quiz)}
+                        className="text-blue-600 hover:text-blue-800 text-lg"
+                        title="Retake Quiz"
+                      >
+                        🔄
+                      </button>
+
+                      <button
+                        onClick={() => handleDelete(quiz.id)}
+                        className="text-red-600 hover:text-red-800 text-lg"
+                        title="Delete Quiz"
+                      >
+                        🗑️
+                      </button>
+
+                      <button
+                        onClick={handleAnalytics}
+                        className="text-green-600 hover:text-green-800 text-lg"
+                        title="View Analytics"
+                      >
+                        📊
+                      </button>
+
+                    </td>
+
                 </tr>
               ))
             )}
