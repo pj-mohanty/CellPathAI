@@ -1,6 +1,6 @@
 import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import React, {useEffect, useState} from "react";
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
     const auth = getAuth();
@@ -40,6 +40,7 @@ function SignUp() {
 
     const createUser = async(e) => {
         e?.preventDefault();
+        setInfoMsg('');
 
         const problem = validate();
         if (problem) {
@@ -49,7 +50,7 @@ function SignUp() {
 
         setSubmitting(true);
         try {
-            const cred = await createUserWithEmailAndPassword(auth, email.trim(), pw);
+            await createUserWithEmailAndPassword(auth, email.trim(), pw);
         } catch (error) {
             console.error('Sign-up error: ', error);
             let msg = error?.message || 'Sign-up failed.';
@@ -65,6 +66,9 @@ function SignUp() {
                     break;
                 case 'auth/weak-password':
                     msg = 'Password is too weak.';
+                    break;
+                default:
+                    msg = error?.code;
             }
             setErrorMsg(msg);
         } finally {
@@ -86,7 +90,28 @@ function SignUp() {
                     <h1 class="text-center text-xl font-semibold text-gray-900">Create your account</h1>
                     <p class="mt-1 text-center text-sm text-gray-500">Start using CellpathAI</p>
 
-                    <form class="mt-6 space-y-4" action="#" method="post" novalidate>
+                    {/* INFO MESSAGE */}
+                    {InfoMsg && (
+                        <div
+                            role="status"
+                            className="mt-4 rounded-md border border-sky-200 bg-sky-50 px-3 py-2 text-sm text-sky-800"
+                        >
+                            {InfoMsg}
+                        </div>
+                    )}
+
+                    {/* ERROR MESSAGE (global) */}
+                    {ErrorMsg && (
+                        <div
+                            role="alert"
+                            className="mt-4 rounded-md border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+                            id="form-error"
+                        >
+                            {ErrorMsg}
+                        </div>
+                    )}
+
+                    <form onsubmit={createUser} class="mt-6 space-y-4" action="#" method="post" novalidate>
                         <div>
                             <label class="block text-sm mb-1 text-gray-700" for="email">Email</label>
                             <div class="relative">
@@ -101,6 +126,7 @@ function SignUp() {
                                     type="email"
                                     required
                                     autocomplete="email"
+                                    onchange={(e) => setEmail(e.target.value)}
                                     placeholder="you@example.com"
                                     class="w-full rounded-md border border-gray-200 bg-white px-10 py-2.5 text-sm outline-none focus:border-gray-400"
                                 />
@@ -189,6 +215,7 @@ function SignUp() {
 
                         <button
                             type="submit"
+                            disabled={Submitting}
                             class="w-full rounded-md bg-gray-900 px-4 py-2.5 text-white transition hover:bg-black"
                         >
                             Get Started
@@ -201,7 +228,6 @@ function SignUp() {
                 </div>
             </div>
         </div>
-
     );
 }
 

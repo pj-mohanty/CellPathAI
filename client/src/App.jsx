@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes, useLocation} from 'react-router-dom';
-import Dashboard from './pages/Dashboard';
+import Quiz from './pages/Quiz';
+import Dashboard from "./pages/Dashboard";
 import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import SignUp from './pages/SignUp';
+import ForgotPW from "./pages/ForgotPW";
 import Analytics from './pages/Analytics';
 import {getAuth, onAuthStateChanged} from 'firebase/auth';
 import './firebase';
@@ -36,10 +38,11 @@ function MainContent({ loggedUser, setLoggedUser }) {
   const location = useLocation();
   const isLoginPage = location.pathname === '/login';
   const isSignUp = location.pathname === '/signup';
+  const isforgot = location.pathname === '/forgotpw';
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {!isLoginPage && !isSignUp && <Navbar />}
+      {!isLoginPage && !isSignUp && !isforgot && <Navbar />}
 
       <Routes>
         <Route path="/" element={<Navigate to="/login" replace />} />
@@ -55,7 +58,6 @@ function MainContent({ loggedUser, setLoggedUser }) {
           }
         />
 
-
         <Route
             path="/signup"
             element={
@@ -63,6 +65,23 @@ function MainContent({ loggedUser, setLoggedUser }) {
             }
         />
 
+        <Route
+            path="/forgotpw"
+            element={
+                <ForgotPW />
+            }
+        />
+
+        <Route
+            path={"/quiz"}
+            element={
+                loggedUser ? (
+                    <Quiz loggedUser={loggedUser} />
+                ) : (
+                    <Navigate to={"/login"} replace />
+                )
+            }
+        />
 
         <Route
           path="/dashboard"
@@ -74,6 +93,7 @@ function MainContent({ loggedUser, setLoggedUser }) {
             )
           }
         />
+
         {/* ✅ New Analytics route */}
         <Route
           path="/quiz-analytics"

@@ -215,4 +215,4 @@ React + Vite Documentation
 
 Tailwind CSS Documentation
 
-ChatGPT (OpenAI, 2025) — assisted in debugging and refactoring backend–frontend integration.
+ChatGPT (OpenAI, 2025) — assisted in debugging and refactoring backend–frontend integration. Also used for HTML design

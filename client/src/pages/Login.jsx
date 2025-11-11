@@ -120,7 +120,7 @@ function Login() {
               <div>
                 <div className="flex items-center justify-between">
                   <label className="block text-sm mb-1 text-gray-700">Password</label>
-                  <a href="/forgot" className="text-xs text-gray-500 hover:text-gray-700">
+                  <a href="/forgotpw" className="text-xs text-gray-500 hover:text-gray-700">
                     Forgot password?
                   </a>
                 </div>
