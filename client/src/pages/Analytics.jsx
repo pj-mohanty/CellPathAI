@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   MetricCard,
   ChartCard,
@@ -8,8 +9,10 @@ import {
   Legend,
 } from "../components/AnalyticsComponents";
 
+
 /** QUIZ ANALYTICS DASHBOARD **/
 const QuizAnalyticsDashboard = () => {
+  const navigate = useNavigate();
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -37,6 +40,7 @@ const QuizAnalyticsDashboard = () => {
   if (quizzes.length === 0) return <p className="p-10 text-center text-gray-500">No quiz data yet.</p>;
 
   // --- Derived analytics ---
+  
   const total = quizzes.length;
   const passed = quizzes.filter((q) => q.score >= 50).length;
   const failed = total - passed;
@@ -51,6 +55,9 @@ const QuizAnalyticsDashboard = () => {
     value: q.score,
   }));
 
+   const handleTakeNewQuiz = () => {
+      navigate("/topics");
+    };
   const pieData = [
     { name: "Passed", value: passed, color: "#22c55e" },
     { name: "Failed", value: failed, color: "#ef4444" },
@@ -68,9 +75,12 @@ const QuizAnalyticsDashboard = () => {
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
           <h1 className="text-xl font-semibold text-gray-900">📊 Quiz Analytics</h1>
-          <button className="bg-green-600 hover:bg-green-700 text-white text-sm px-4 py-2 rounded-md">
-            Take New Quiz
-          </button>
+          <button
+          onClick={handleTakeNewQuiz}
+          className="bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-green-700"
+        >
+          Take New Quiz
+        </button>
         </div>
       </div>
 
