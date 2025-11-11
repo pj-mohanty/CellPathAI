@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {BrowserRouter as Router, Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import Quiz from './pages/Quiz';
+import Read from './pages/read';
 import Dashboard from "./pages/Dashboard";
 import Topics from './pages/Topics';
 import Navbar from './components/Navbar';
@@ -12,113 +13,124 @@ import {getAuth, onAuthStateChanged} from 'firebase/auth';
 import './firebase';
 
 function App() {
-  const [loggedUser, setLoggedUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+    const [loggedUser, setLoggedUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const auth = getAuth();
-      return onAuthStateChanged(auth, (user) => {
-        setLoggedUser(user);
-        setLoading(false);
-    });
-  }, []);
+    useEffect(() => {
+        const auth = getAuth();
+        return onAuthStateChanged(auth, (user) => {
+            setLoggedUser(user);
+            setLoading(false);
+        });
+    }, []);
 
-  if (loading) {
-    return <div className="flex items-center justify-center h-screen text-lg">Loading...</div>;
-  }
+    if (loading) {
+        return <div className="flex items-center justify-center h-screen text-lg">Loading...</div>;
+    }
 
-  return (
-    <Router>
-      <MainContent loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
-    </Router>
-  );
+    return (
+        <Router>
+            <MainContent loggedUser={loggedUser} setLoggedUser={setLoggedUser}/>
+        </Router>
+    );
 }
 
-function MainContent({ loggedUser, setLoggedUser }) {
-  const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
-  const isSignUp = location.pathname === '/signup';
-  const isforgot = location.pathname === '/forgotpw';
+function MainContent({loggedUser, setLoggedUser}) {
+    const location = useLocation();
+    const isLoginPage = location.pathname === '/login';
+    const isSignUp = location.pathname === '/signup';
+    const isforgot = location.pathname === '/forgotpw';
 
-  return (
-    <div className="min-h-screen bg-gray-50">
-      {!isLoginPage && !isSignUp && !isforgot && <Navbar />}
+    return (
+        <div className="min-h-screen bg-gray-50">
+            {!isLoginPage && !isSignUp && !isforgot && <Navbar/>}
 
-      <Routes>
-        <Route path="/" element={<Navigate to="/login" replace />} />
+            <Routes>
+                <Route path="/" element={<Navigate to="/login" replace/>}/>
 
-        <Route
-          path="/login"
-          element={
-            loggedUser ? (
-              <Navigate to="/dashboard" replace />
-            ) : (
-              <Login loggedUser={loggedUser} setLoggedUser={setLoggedUser} />
-            )
-          }
-        />
+                <Route
+                    path="/login"
+                    element={
+                        loggedUser ? (
+                            <Navigate to="/dashboard" replace/>
+                        ) : (
+                            <Login loggedUser={loggedUser} setLoggedUser={setLoggedUser}/>
+                        )
+                    }
+                />
 
-        <Route
-            path="/signup"
-            element={
-                <SignUp />
-            }
-        />
+                <Route
+                    path="/signup"
+                    element={
+                        <SignUp/>
+                    }
+                />
 
-        <Route
-            path="/forgotpw"
-            element={
-                <ForgotPW />
-            }
-        />
+                <Route
+                    path="/forgotpw"
+                    element={
+                        <ForgotPW/>
+                    }
+                />
 
-        <Route
-            path={"/quiz"}
-            element={
-                loggedUser ? (
-                    <Quiz loggedUser={loggedUser} />
-                ) : (
-                    <Navigate to={"/login"} replace />
-                )
-            }
-        />
+                <Route
+                    path={"/quiz"}
+                    element={
+                        loggedUser ? (
+                            <Quiz loggedUser={loggedUser}/>
+                        ) : (
+                            <Navigate to={"/login"} replace/>
+                        )
+                    }
+                />
 
-        <Route
-          path="/dashboard"
-          element={
-            loggedUser ? (
-              <Dashboard loggedUser={loggedUser} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
+                <Route
+                    path="/dashboard"
+                    element={
+                        loggedUser ? (
+                            <Dashboard loggedUser={loggedUser}/>
+                        ) : (
+                            <Navigate to="/login" replace/>
+                        )
+                    }
+                />
 
-        {/* ✅ New Analytics route */}
-        <Route
-          path="/quiz-analytics"
-          element={
-            loggedUser ? (
-              <Analytics loggedUser={loggedUser} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
+                {/* ✅ New Analytics route */}
+                <Route
+                    path="/quiz-analytics"
+                    element={
+                        loggedUser ? (
+                            <Analytics loggedUser={loggedUser}/>
+                        ) : (
+                            <Navigate to="/login" replace/>
+                        )
+                    }
+                />
 
-        <Route
-          path="/topics"
-          element={
-            loggedUser ? (
-              <Topics loggedUser={loggedUser} />
-            ) : (
-              <Navigate to="/login" replace />
-            )
-          }
-        />
-      </Routes>
-    </div>
-  );
+                <Route
+                    path="/topics"
+                    element={
+                        loggedUser ? (
+                            <Topics loggedUser={loggedUser}/>
+                        ) : (
+                            <Navigate to="/login" replace/>
+                        )
+                    }
+                />
+
+                <Route
+                    path="/read/:slug"
+                    element={
+                        loggedUser ? (
+                            <Read/>
+                        ) : (
+                            <Navigate to="/login" replace/>
+                        )
+                    }
+                />
+            </Routes>
+        </div>
+    );
 }
 
 export default App;

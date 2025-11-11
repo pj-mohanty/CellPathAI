@@ -1,4 +1,4 @@
-package com.cellpathai.controllers;
+//package com.cellpathai.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +28,7 @@ public class DashboardQuizController {
     public List<Map<String, Object>> getDashboardQuizzes() throws ExecutionException, InterruptedException {
         List<Map<String, Object>> quizzes = new ArrayList<>();
 
+        /*
         ApiFuture<QuerySnapshot> future = db.collection("dashboardQuizzes").get();
         List<QueryDocumentSnapshot> documents = future.get().getDocuments();
 
@@ -36,6 +37,8 @@ public class DashboardQuizController {
             data.put("id", doc.getId());
             quizzes.add(data);
         }
+
+         */
 
         return quizzes;
     }
