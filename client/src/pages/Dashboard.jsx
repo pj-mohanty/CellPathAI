@@ -81,12 +81,7 @@ const Dashboard = () => {
     <div className="px-6 py-8 bg-gray-50 min-h-[100vh]">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-semibold text-gray-800">Quiz Dashboard</h1>
-        <button
-          onClick={() => console.log("Take new quiz")}
-          className="bg-green-600 text-white text-sm px-4 py-2 rounded-md hover:bg-blue-700"
-        >
-          Take new Quiz
-        </button>
+
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
