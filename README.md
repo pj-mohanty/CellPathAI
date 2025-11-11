@@ -205,6 +205,8 @@ AI also helped me to format the login page in Login.jsx so that it looks nicer a
 
 AI helped in developing the Quiz Analytics Dashboard, especially in implementing visual components like pie charts and bar graphs to display quiz performance insights. It provided examples for structuring React state management and integrating dynamic data with chart components.
 
+I used AI to help me make the UI look nicer and cohesive, as I did not know how to change the font. It showed me how to take a google font and integrate it into the Navbar.
+
 ### Citations & References
 
 This project was built with help from:
@@ -218,3 +220,4 @@ React + Vite Documentation
 Tailwind CSS Documentation
 
 ChatGPT (OpenAI, 2025) — assisted in debugging and refactoring backend–frontend integration.
+
