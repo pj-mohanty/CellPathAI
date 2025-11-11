@@ -43,7 +43,17 @@ const [selectedQuizCategory, setSelectedQuizCategory] = useState({});
             },
             {
               role: "user",
-              content: `Write a detailed, easy-to-understand explanation of ${topic} in biology. Include 2–3 paragraphs with biological importance, key steps, and analogies where helpful.`,
+              content: `
+                Explain the topic: **${topic}** in biology.
+                
+                Your response must include:
+                - A simple introduction of what it is
+                - Why it matters in living organisms
+                - The key steps or mechanisms involved
+                - A relatable analogy (but only one)
+                
+                Write the explanation in **2–3 paragraphs**, each 4–6 sentences. 
+                Avoid unnecessary jargon. Answer like you're teaching a motivated student who wants to truly understand.`
             },
           ],
           max_tokens: 400,
