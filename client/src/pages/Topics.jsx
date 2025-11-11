@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Topics = () => {
   const [topics] = useState([
@@ -14,15 +16,16 @@ const Topics = () => {
   const [summaries, setSummaries] = useState({});
   const [loadingTopic, setLoadingTopic] = useState(null);
   const [error, setError] = useState(null);
-
-  // Store selected quiz number per topic
-  const [selectedQuizNumber, setSelectedQuizNumber] = useState({});
+const [selectedQuizCategory, setSelectedQuizCategory] = useState({});
 
   const OPENAI_API_KEY = process.env.REACT_APP_OPENAI_API_KEY;
+  const navigate = useNavigate();
+
 
   const generateSummary = async (topic) => {
     setError(null);
     setLoadingTopic(topic);
+    
     try {
       const response = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -63,18 +66,24 @@ const Topics = () => {
   };
 
   const handleQuizStart = (topic) => {
-    const quizNumber = selectedQuizNumber[topic];
-    if (!quizNumber) {
-      alert("Please select a quiz number first!");
-      return;
-    }
-    // For now, just alert — later you can navigate to a quiz page
-    alert(`Starting Quiz ${quizNumber} for ${topic}`);
-    console.log(`Starting Quiz ${quizNumber} for ${topic}`);
-  };
+  const quizCategory = selectedQuizCategory[topic];
+  if (!quizCategory) {
+    alert("Please select a quiz category first!");
+    return;
+  }
+  // Navigate to quiz page with topic and category as URL params
+  navigate(`/quiz/${encodeURIComponent(topic)}/${encodeURIComponent(quizCategory)}`);
+};
 
-  // Quiz numbers 1–5
-  const quizNumbers = [1, 2, 3, 4, 5];
+
+
+  const quizCategories = [
+    "Function",
+    "Pathway",
+    "Mechanism",
+    "Regulation",
+    "Application",
+  ];
 
   return (
     <div className="px-6 py-8 bg-gray-50 min-h-[100vh]">
@@ -127,32 +136,34 @@ const Topics = () => {
                   <div className="flex flex-col gap-2">
                     {/* Dropdown for quiz number */}
                     <select
-                      value={selectedQuizNumber[topic] || ""}
+                      value={selectedQuizCategory[topic] || ""}
                       onChange={(e) =>
-                        setSelectedQuizNumber((prev) => ({
+                        setSelectedQuizCategory((prev) => ({
                           ...prev,
                           [topic]: e.target.value,
                         }))
                       }
                       className="border border-gray-300 rounded-md px-2 py-1 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
-                      <option value="">Select Quiz #</option>
-                      {quizNumbers.map((num) => (
-                        <option key={num} value={num}>
-                          Quiz {num}
+                      <option value="">Select Category</option>
+                      {quizCategories.map((cat) => (
+                        <option key={cat} value={cat}>
+                          {cat}
                         </option>
                       ))}
                     </select>
 
+
                     {/* Take Quiz button */}
                     <button
                       onClick={() => handleQuizStart(topic)}
-                      disabled={!selectedQuizNumber[topic]}
+                      disabled={!selectedQuizCategory[topic]}
                       className={`px-3 py-1 rounded-md text-white text-sm font-medium transition-all ${
-                        selectedQuizNumber[topic]
+                        selectedQuizCategory[topic]
                           ? "bg-green-600 hover:bg-green-700"
                           : "bg-gray-400 cursor-not-allowed"
                       }`}
+
                     >
                       Take Quiz
                     </button>
